@@ -16,7 +16,7 @@ import java.io.IOException;
 		service = WeatherInvoker.class
 )
 public class WeatherInvoker {
-	public String getSkillJarInfo() throws PortalException, IOException {
+	public String getWeatherInfo() throws PortalException, IOException {
 		long userId = PrincipalThreadLocal.getUserId();
 		User user = userLocalService.getUser(userId);
 		Address primaryAddress = null;
