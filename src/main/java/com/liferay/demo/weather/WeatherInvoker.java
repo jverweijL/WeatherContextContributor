@@ -17,6 +17,11 @@ import java.io.IOException;
 )
 public class WeatherInvoker {
 	public String getWeatherInfo() throws PortalException, IOException {
+		return this.getWeatherInfo("metric");
+	}
+
+	public String getWeatherInfo(String units) throws PortalException, IOException {
+		//Units of measurement. standard, metric and imperial
 		long userId = PrincipalThreadLocal.getUserId();
 		User user = userLocalService.getUser(userId);
 		Address primaryAddress = null;
@@ -27,7 +32,8 @@ public class WeatherInvoker {
 			}
 		}
 		if ((primaryAddress != null) && (!primaryAddress.getCity().isEmpty())) {
-			String api = "weather?q=" + primaryAddress.getCity() + "&appid=" + PortalUtil.getPortalProperties().getProperty("com.liferay.demo.openweathermap.apikey");
+			if (units.isEmpty()) units = "metric";
+			String api = "weather?q=" + primaryAddress.getCity() + "&units=" + units +  "&appid=" + PortalUtil.getPortalProperties().getProperty("com.liferay.demo.openweathermap.apikey");
 			String apiURL = "https://api.openweathermap.org/data/2.5/" + api;
 			System.out.println("Calling " + apiURL);
 			Http.Options options = new Http.Options();
